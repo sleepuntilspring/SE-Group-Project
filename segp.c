@@ -53,7 +53,7 @@ void execute(const char* assembly, Instruction instructions[], Register register
 
     if (sscanf(assembly, "%6s %4s %4s %4s", mnemonic, operands[0], operands[1], operands[2]) >= 1) {
         // Debugging: Print the parsed mnemonic and operands
-        printf("Mnemonic: %s, Operands: %s %s %s\n", mnemonic, operands[0], operands[1], operands[2]);
+        // printf("Mnemonic: %s, Operands: %s %s %s\n", mnemonic, operands[0], operands[1], operands[2]);
         for (size_t i = 0; instructions[i].mnemonic[0] != '\0'; i++) {
             if (strcmp(mnemonic, instructions[i].mnemonic) == 0) {
                 // Execute the operation based on the mnemonic
@@ -397,10 +397,7 @@ int main() {
     // Read assembly code from the file and execute it line by line
     printf("Reading assembly code from file and executing line by line...\n");
     readAssemblyFromFile("example2.txt", instructions, registers);
-    printf("\nRegister R3 after MIL: %d\n", registers[3].value);
-    printf("Register R4 after MIH: 0x%08X\n", registers[4].value);
-    printf("Register R5 after MI: 0x%08X\n", registers[5].value);
-    
+        
     printf("Stack Pointer (SP): 0x%08X\n", stackPointer);
     printf("Program Counter (PC): 0x%08X\n", programCounter);
 
