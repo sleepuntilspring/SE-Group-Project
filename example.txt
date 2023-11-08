@@ -1,0 +1,16 @@
+mil r6=0xFF0F 			--16-bit port output address
+mi rA0=0x03F0 			--load 32-bit sp value to A0, 3F0 =1008
+m rA0,sp 			--initialize stack pointer
+mi r1=0x0001			--initialize constant
+mi r2=0x0201 			--initialize constant
+AGAIN: xor r9,r9,r9 		--initialize r9=0
+DISP_COUNT: m r9,#r6 		--Display LED
+call DELAY			--
+add r9,r1,r9 			--increment r1, store result in r9
+sub r2,r9,r9 			--decrement r9, store result in r9
+x= DISP_COUNT 			--jump to branch DISP_COUNT
+j AGAIN
+DELAY: mi r10=0x100000 		--load 32-bit DELAY counter
+REDUCE: sub r10,r1,r10 		--decrement counter
+x= REDUCE 			--if x= (-1), return to the subroutine
+ret
