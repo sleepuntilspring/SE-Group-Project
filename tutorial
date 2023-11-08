@@ -1,0 +1,6 @@
+echo_client_server.c goes with EchoCLientGUI.java 
+plusoneserver.c goes with Client.java
+
+to compile the C files open cmd and locate the place where the file is stored, type gcc plusoneserver.c -o plusoneserver -lws2_32
+
+open c file first and open java
