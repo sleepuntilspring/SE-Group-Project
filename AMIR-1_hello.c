@@ -254,8 +254,8 @@ void convert_and_print(FILE *inputFile, FILE *outputFile) {
 
 
                     //goto again;
-
-                    //fgets(line, sizeof(line), inputFile);
+                    
+                    fgets(line, sizeof(line), inputFile);
 
             }
 
@@ -359,7 +359,7 @@ void convert_and_print(FILE *inputFile, FILE *outputFile) {
                     // fgets(line, sizeof(line), inputFile);
             }
         }
-
+        
         else if (strcmp(token, "x=") == 0) {
             token = strtok(NULL, " ");
             char *operand2 = token;
