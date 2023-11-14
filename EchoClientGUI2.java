@@ -15,11 +15,9 @@ public class EchoClientGUI {
         frame.setSize(600, 300);
         frame.setLayout(new GridLayout(1, 2));
 
-        // Left side of the frame
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
-        // "FILE" and "Help" menus on the top left
         JMenuBar leftMenuBar = new JMenuBar();
         JMenu m1 = new JMenu("File");
         JMenu m2 = new JMenu("Help");
@@ -49,7 +47,6 @@ public class EchoClientGUI {
         m4.add(m99);
         leftPanel.add(leftMenuBar);
 
-        // Input components
         inputField = new JTextField(20);
         sendButton = new JButton("Run");
         sendButton.addActionListener(e -> sendAndReceive(inputField.getText()));
@@ -59,7 +56,6 @@ public class EchoClientGUI {
         leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         frame.add(leftPanel);
 
-        // Right side of the frame
         JPanel rightPanel = new JPanel(new BorderLayout());
         outputArea = new JTextArea(10, 30);
         outputArea.setEditable(false);
