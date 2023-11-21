@@ -32,6 +32,12 @@ def add_text():
     txt_edit.insert(tk.END, text_to_add + '\n')
     entry.delete(0, tk.END)
 
+def run_translation():
+    pass
+
+def show_about():
+    pass
+
 window = tk.Tk()
 window.title("AMIR2")
 
@@ -41,8 +47,12 @@ paned_window.pack(expand=True, fill=tk.BOTH)
 top_frame = tk.Frame(window)
 btn_open = tk.Button(top_frame, text="Open", command=open_file)
 btn_save = tk.Button(top_frame, text="Save As...", command=save_file)
+btn_run = tk.Button(top_frame, text="Run", command=run_translation)
+btn_about = tk.Button(top_frame, text="About", command=show_about)
 btn_open.pack(side=tk.TOP, padx=5, pady=5)
 btn_save.pack(side=tk.TOP, padx=5, pady=5)
+btn_run.pack(side=tk.TOP, padx=5, pady=5)
+btn_about.pack(side=tk.TOP, padx=5, pady=5)
 
 paned_window.add(top_frame)
 
