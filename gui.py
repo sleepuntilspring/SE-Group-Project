@@ -66,7 +66,7 @@ top_frame = tk.Frame(window)
 
 buttons = [
     tk.Button(top_frame, text="Open", command=open_file),
-    tk.Button(top_frame, text="Save As...", command=save_file),
+    tk.Button(top_frame, text="Save As", command=save_file),
     tk.Button(top_frame, text="Run", command=run_translation),
     tk.Button(top_frame, text="About", command=show_about),
 ]
