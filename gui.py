@@ -3,16 +3,22 @@ from tkinter import filedialog
 
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
+translation_dict = {
+    "1010": "MOV",
+    "1100": "ADD",
+    "0011": "SUB",
+}
+
 def open_file():
     filepath = askopenfilename(
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
     )
     if not filepath:
         return
-    txt_edit.delete("1.0", tk.END)
+    entry.delete(0, tk.END)
     with open(filepath, mode="r", encoding="utf-8") as input_file:
         text = input_file.read()
-        txt_edit.insert(tk.END, text)
+        entry.insert(tk.END, text)
     window.title(f"AMIR2 - {filepath}")
 
 def save_file():
@@ -23,17 +29,29 @@ def save_file():
     if not filepath:
         return
     with open(filepath, mode="w", encoding="utf-8") as output_file:
-        text = txt_edit.get("1.0", tk.END)
+        text = entry.get()
         output_file.write(text)
     window.title(f"AMIR2 - {filepath}")
 
 def add_text():
     text_to_add = entry.get()
-    txt_edit.insert(tk.END, text_to_add + '\n')
     entry.delete(0, tk.END)
+    output_text = translate(text_to_add)
+    output_widget.delete("1.0", tk.END)
+    output_widget.insert(tk.END, output_text)
 
 def run_translation():
-    pass
+    input_text = entry.get()
+    output_text = translate(input_text)
+    output_widget.delete("1.0", tk.END)
+    output_widget.insert(tk.END, output_text)
+
+def translate(machine_code):
+    assembly_code = []
+    for code in machine_code.split():
+        translated = translation_dict.get(code, "UNKNOWN")
+        assembly_code.append(translated)
+    return " ".join(assembly_code)
 
 def show_about():
     pass
@@ -45,30 +63,29 @@ paned_window = tk.PanedWindow(window, orient=tk.HORIZONTAL)
 paned_window.pack(expand=True, fill=tk.BOTH)
 
 top_frame = tk.Frame(window)
-btn_open = tk.Button(top_frame, text="Open", command=open_file)
-btn_save = tk.Button(top_frame, text="Save As...", command=save_file)
-btn_run = tk.Button(top_frame, text="Run", command=run_translation)
-btn_about = tk.Button(top_frame, text="About", command=show_about)
-btn_open.pack(side=tk.TOP, padx=5, pady=5)
-btn_save.pack(side=tk.TOP, padx=5, pady=5)
-btn_run.pack(side=tk.TOP, padx=5, pady=5)
-btn_about.pack(side=tk.TOP, padx=5, pady=5)
+
+buttons = [
+    tk.Button(top_frame, text="Open", command=open_file),
+    tk.Button(top_frame, text="Save As...", command=save_file),
+    tk.Button(top_frame, text="Run", command=run_translation),
+    tk.Button(top_frame, text="About", command=show_about),
+]
+
+for btn in buttons:
+    btn.pack(pady=5)
 
 paned_window.add(top_frame)
 
 right_frame = tk.Frame(paned_window, relief=tk.RAISED, bd=2)
 
-txt_edit = tk.Text(right_frame)
-txt_edit.grid(row=0, column=0, sticky="nsew")
-
 entry = tk.Entry(right_frame)
-entry.grid(row=0, column=1, sticky="nsew")
-add_button = tk.Button(right_frame, text="Translate", command=add_text)
-add_button.grid(row=1, column=0, columnspan=2, pady=5)
+entry.grid(row=0, column=0, sticky="nsew")
 
-right_frame.grid_columnconfigure(0, weight=1)
-right_frame.grid_columnconfigure(1, weight=1)
+output_widget = tk.Text(right_frame, wrap="word", height=2)  # Set height to 2 lines
+output_widget.grid(row=0, column=1, sticky="nsew")
 
+right_frame.grid_columnconfigure(0, weight=1, uniform="equal")
+right_frame.grid_columnconfigure(1, weight=1, uniform="equal")
 right_frame.grid_rowconfigure(0, weight=1)
 
 paned_window.add(right_frame)
