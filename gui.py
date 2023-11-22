@@ -9,9 +9,9 @@ translation_dict = {
     "0011": "SUB",
 }
 
-def open_file():
+def open_file(): 
     filepath = askopenfilename(
-        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")] 
     )
     if not filepath:
         return
@@ -19,9 +19,9 @@ def open_file():
     with open(filepath, mode="r", encoding="utf-8") as input_file:
         code = input_file.read()
         text.insert(tk.END, code)
-    window.title(f"AMIR2 - {filepath}")
+    window.title(f"AMIR - {filepath}")
 
-def save_file():
+def save_file(): 
     filepath = asksaveasfilename(
         defaultextension=".txt",
         filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")],
@@ -31,7 +31,7 @@ def save_file():
     with open(filepath, mode="w", encoding="utf-8") as output_file:
         code = text.get("1.0", tk.END)
         output_file.write(code)
-    window.title(f"AMIR2 - {filepath}")
+    window.title(f"AMIR - {filepath}")
 
 def add_text():
     text_to_add = text.get("1.0", tk.END)
@@ -57,7 +57,7 @@ def show_about():
     pass
 
 window = tk.Tk()
-window.title("AMIR2")
+window.title("AMIR")
 
 paned_window = tk.PanedWindow(window, orient=tk.HORIZONTAL)
 paned_window.pack(expand=True, fill=tk.BOTH)
