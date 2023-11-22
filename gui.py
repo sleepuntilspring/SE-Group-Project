@@ -15,10 +15,10 @@ def open_file():
     )
     if not filepath:
         return
-    entry.delete(0, tk.END)
+    text.delete("1.0", tk.END)
     with open(filepath, mode="r", encoding="utf-8") as input_file:
-        text = input_file.read()
-        entry.insert(tk.END, text)
+        code = input_file.read()
+        text.insert(tk.END, code)
     window.title(f"AMIR2 - {filepath}")
 
 def save_file():
@@ -29,19 +29,19 @@ def save_file():
     if not filepath:
         return
     with open(filepath, mode="w", encoding="utf-8") as output_file:
-        text = entry.get()
-        output_file.write(text)
+        code = text.get("1.0", tk.END)
+        output_file.write(code)
     window.title(f"AMIR2 - {filepath}")
 
 def add_text():
-    text_to_add = entry.get()
-    entry.delete(0, tk.END)
+    text_to_add = text.get("1.0", tk.END)
+    text.delete("1.0", tk.END)
     output_text = translate(text_to_add)
     output_widget.delete("1.0", tk.END)
     output_widget.insert(tk.END, output_text)
 
 def run_translation():
-    input_text = entry.get()
+    input_text = text.get("1.0", tk.END)
     output_text = translate(input_text)
     output_widget.delete("1.0", tk.END)
     output_widget.insert(tk.END, output_text)
@@ -78,8 +78,8 @@ paned_window.add(top_frame)
 
 right_frame = tk.Frame(paned_window, relief=tk.RAISED, bd=2)
 
-entry = tk.Entry(right_frame)
-entry.grid(row=0, column=0, sticky="nsew")
+text = tk.Text(right_frame, wrap="none", width=40, height=10)
+text.grid(row=0, column=0, sticky="nsew")
 
 output_widget = tk.Text(right_frame, wrap="word", height=2)  # Set height to 2 lines
 output_widget.grid(row=0, column=1, sticky="nsew")
