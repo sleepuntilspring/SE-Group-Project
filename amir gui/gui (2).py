@@ -50,7 +50,7 @@ def run_translation():
         file.write(input_text)
 
     # Enclose the executable path in double quotes
-    c_program_path = '"C:\\Study\\SEGP\\amir gui\\AMIR-1_hello.exe"'
+    c_program_path = '"C:\\Study\\SEGP\\amir gui\\AMIR-1_hello.exe"' #CHANGE THIS TO THE PATH WHERE YOU STORED YOUR exe file
 
     # Call C backend to process 'example.txt'
     os.system(c_program_path)
