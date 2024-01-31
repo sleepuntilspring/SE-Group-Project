@@ -81,7 +81,7 @@ right_frame = tk.Frame(paned_window, relief=tk.RAISED, bd=2)
 text = tk.Text(right_frame, wrap="none", width=40, height=10)
 text.grid(row=0, column=0, sticky="nsew")
 
-output_widget = tk.Text(right_frame, wrap="word", height=2)  # Set height to 2 lines
+output_widget = tk.Text(right_frame, wrap="word", height=2)  
 output_widget.grid(row=0, column=1, sticky="nsew")
 
 right_frame.grid_columnconfigure(0, weight=1, uniform="equal")
