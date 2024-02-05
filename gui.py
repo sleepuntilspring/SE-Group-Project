@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import Scrollbar
+from tkinter import PanedWindow
 
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
@@ -13,6 +15,32 @@ translation_dict = {
     "mil": "03",
     "mih": "04",
     "mi": "05",
+    "m ra, sp": "06",
+    "m sp, ra": "07",
+    "m ra, @rb": "08",
+    "m @ra, rb": "09",
+    "m ra, #rb": "0A",
+    "m #ra, rb": "0B",
+    "m @ra, #rb": "0C",
+    "m #ra, @rb": "0D",
+    "and": "0E",
+    "or": "0F",
+    "xor": "10",
+    "not": "11",
+    "add": "12",
+    "sub": "13",
+    "sl": "14",
+    "sr": "15",
+    "call": "16",
+    "ret": "17",
+    "push": "18",
+    "pop": "19",
+    "j": "1A",
+    "x=": "1B",
+    "x<": "1C",
+    "x>": "1D",
+    "x<=": "1E",
+    "x>=": "1F",
 }
 
 def open_file():
@@ -46,19 +74,38 @@ def add_text():
     output_widget.delete("1.0", tk.END)
     output_widget.insert(tk.END, output_text)
 
-def run_translation(event=None):  # Updated function signature to handle events
+def run_translation(event=None): 
     input_text = text.get("1.0", tk.END)
     output_text = translate(input_text)
     output_widget.delete("1.0", tk.END)
     output_widget.insert(tk.END, output_text)
 
-    text.tag_delete("1010")
-    text.tag_delete("1100")
-    text.tag_delete("0011")
+    text.tag_delete("00")
+    text.tag_delete("01")
+    text.tag_delete("02")
+    text.tag_delete("03")
+    text.tag_delete("04")
 
-    text.tag_configure("1010", foreground="blue")
-    text.tag_configure("1100", foreground="green")
-    text.tag_configure("0011", foreground="red")
+    text.tag_configure("00", foreground="blue")
+    text.tag_configure("01", foreground="green")
+    text.tag_configure("02", foreground="red")
+    text.tag_configure("03", foreground="yellow")
+    text.tag_configure("04", foreground="brown")
+    text.tag_configure("05", foreground="pink")
+    text.tag_configure("06", foreground="orange")
+    text.tag_configure("07", foreground="orange")
+    text.tag_configure("08", foreground="orange")
+    text.tag_configure("09", foreground="orange")
+    text.tag_configure("0A", foreground="orange")
+    text.tag_configure("0B", foreground="orange")
+    text.tag_configure("0C", foreground="orange")
+    text.tag_configure("0D", foreground="orange")
+    text.tag_configure("0E", foreground="lavender")
+    text.tag_configure("0F", foreground="midnight blue")
+    text.tag_configure("10", foreground="maroon")
+    text.tag_configure("11", foreground="indigo")
+    text.tag_configure("12", foreground="grey")
+
 
     for code in input_text.split():
         translated = translation_dict.get(code, "UNKNOWN")
@@ -103,27 +150,25 @@ for btn in buttons:
 paned_window = tk.PanedWindow(window, orient=tk.HORIZONTAL)
 paned_window.pack(expand=True, fill=tk.BOTH)
 
-left_frame = tk.Frame(paned_window, relief=tk.RAISED, bd=2)
-left_text = tk.Text(left_frame, wrap="none", width=40, height=10)
-left_text.grid(row=0, column=0, sticky="nsew")
-left_frame.grid_columnconfigure(0, weight=1, uniform="equal")
-left_frame.grid_rowconfigure(0, weight=1)
-paned_window.add(left_frame)
-
 right_frame = tk.Frame(paned_window, relief=tk.RAISED, bd=2)
-text = tk.Text(right_frame, wrap="none", width=40, height=10)
+text = tk.Text(right_frame, wrap="word", width=40, height=10)
 text.grid(row=0, column=0, sticky="nsew")
 
 output_widget = tk.Text(right_frame, wrap="word", height=2)
 output_widget.grid(row=0, column=1, sticky="nsew")
 
-right_frame.grid_columnconfigure(0, weight=1, uniform="equal")
-right_frame.grid_columnconfigure(1, weight=1, uniform="equal")
-right_frame.grid_rowconfigure(0, weight=1)
+scrollbar = Scrollbar(right_frame, command=text.yview)
+scrollbar.grid(row=0, column=2, sticky="nsew")
+text.config(yscrollcommand=scrollbar.set)
+
+scrollbar = Scrollbar(paned_window, command=text.yview)
+paned_window.add(right_frame)
+paned_window.add(scrollbar)
+
+text.config(yscrollcommand=scrollbar.set)
 
 paned_window.add(right_frame)
 
-paned_window.paneconfig(left_frame, minsize=200, stretch="always")
 paned_window.paneconfig(right_frame, minsize=500, stretch="always")
 
 text.bind("<KeyRelease>", run_translation)
