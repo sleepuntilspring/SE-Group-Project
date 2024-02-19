@@ -223,6 +223,23 @@ output_scrollbar = Scrollbar(output_frame, command=output_widget.yview, troughco
 output_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 output_widget.config(yscrollcommand=output_scrollbar.set)
 
+bottom_frame = tk.Frame(window)
+bottom_frame.pack(side=tk.BOTTOM, fill=tk.X)
+
+new_text1 = tk.Text(bottom_frame, wrap="word", height=20, width=20)
+new_text1.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+new_scrollbar1 = Scrollbar(bottom_frame, command=new_text1.yview, troughcolor="lightgrey", highlightcolor="grey", activebackground="grey")
+new_scrollbar1.pack(side=tk.RIGHT, fill=tk.Y)
+new_text1.config(yscrollcommand=new_scrollbar1.set)
+
+new_text2 = tk.Text(bottom_frame, wrap="word", height=20, width=20)
+new_text2.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+new_scrollbar2 = Scrollbar(bottom_frame, command=new_text2.yview, troughcolor="lightgrey", highlightcolor="grey", activebackground="grey")
+new_scrollbar2.pack(side=tk.RIGHT, fill=tk.Y)
+new_text2.config(yscrollcommand=new_scrollbar2.set)
+
 text.bind("<KeyRelease>", run_translation)
 
 window.mainloop()
