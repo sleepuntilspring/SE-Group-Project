@@ -7,7 +7,6 @@ import os
 
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
-current_file_path = None
 
 def open_file():
     filepath = askopenfilename(
@@ -55,6 +54,39 @@ def run_translation():
             output_widget.config(state=tk.DISABLED)
     else:
         print("Error: 'output.txt' not found. Check if the C program ran correctly.")
+
+current_line_index = 0  # Global variable to keep track of the current line
+
+def run_by_line():
+    global current_line_index
+    current_line_index += 1  # Process the next line
+    
+    input_text = user_input.get("1.0", tk.END)  # Get text from the input widget
+    input_lines = input_text.split('\n')[:current_line_index]  # Get up to current line
+    
+    # Write the currently processed lines to a temporary file
+    with open('temp_input.txt', 'w') as temp_input_file:
+        temp_input_file.write("\n".join(input_lines))
+    
+    # Call your C program with the line count
+    c_program_path = '"C:\\Study\\SEGP\\amir gui 3\\stepBystep.exe"'
+    input_file_path = 'example.txt'
+    output_file_path = 'output.txt'
+    # Ensure the entire command is constructed properly, especially with paths that contain spaces
+    command = f'"{c_program_path}" "{input_file_path}" "{output_file_path}" {current_line_index}'
+
+    # Use the constructed command in os.system()
+    os.system(command)
+    
+    # Read and display the output
+    if os.path.exists(output_file_path):
+        with open(output_file_path, 'r') as output_file:
+            output_text = output_file.read()
+            output_widget.config(state=tk.NORMAL)
+            output_widget.delete("1.0", tk.END)
+            output_widget.insert(tk.END, output_text)
+            output_widget.config(state=tk.DISABLED)
+
 
 def toggle_theme():
     global current_theme
@@ -104,7 +136,8 @@ file_menu.add_command(label="Open", command=open_file)
 file_menu.add_command(label="Save As...", command=save_file)
 
 # Add a 'Run' button and a 'Toggle Theme' button directly to the main menu bar
-menu.add_command(label="Run", command=run_translation)
+menu.add_command(label="Run All", command=run_translation)
+menu.add_command(label="Run By Line", command=run_by_line)
 menu.add_command(label="Dark Mode", command=toggle_theme)
 
 paned_window = tk.PanedWindow(window, orient=tk.HORIZONTAL)
