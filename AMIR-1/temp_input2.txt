@@ -1,0 +1,13 @@
+mi r0= 0x00000005
+mi r1= 0x00000009
+sub r1, r0, r3
+x= JUMP3
+mi r5= 0x00000002
+add r5, r0, r6
+sub r1, r6, r7
+add r5, r0, r6
+x= JUMP
+-- testing
+JUMP3: mi r9= 0x9999
+sub r1, r6, r7
+mi r10= 0x2235

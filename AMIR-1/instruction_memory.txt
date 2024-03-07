@@ -1,0 +1,19 @@
+Counter       Machine Code    Assembly Language
+  0     05000000 00000005  | mi r0= 0x00000005
+  2     05010000 00000009  | mi r1= 0x00000009
+  4              13010003  | sub r1, r0, r3
+Variable not found: JUMP3
+  5     05050000 00000002  | mi r5= 0x00000002
+  7              12050006  | add r5, r0, r6
+  8              13010607  | sub r1, r6, r7
+  9              12050006  | add r5, r0, r6
+Variable not found: JUMP
+  A     05090000 00009999  | JUMP3: mi r9= 0x9999
+  C              13010607  | sub r1, r6, r7
+  D     05100000 00002235  | mi r10= 0x2235
+
+
+Symbol Table
+------------
+No      Label			Address
+1	       JUMP3       A		
